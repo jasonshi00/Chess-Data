@@ -17,6 +17,11 @@ h1 {
     font-size: 5rem;
     margin: 4vh 0;
 }
+img {
+    width: 150px;
+    max-width: 100%;
+    height: auto;
+}
 #input-form {
     display: flex;
     border-radius: 20px;
@@ -46,7 +51,7 @@ i {
     height: 25%;
 }
 #player-info {
-    margin-right: 10vw;
+    margin-left: 2vw;
 }
 li {
     width: 20%;
@@ -80,6 +85,7 @@ li:hover {
     font-size: 1.5rem;
 }
 .pie-chart {
+    --deg: 180deg;
     width: 100px;
     aspect-ratio: 1;
     display: inline-grid;
@@ -89,7 +95,7 @@ li:hover {
     font-weight: bold;
     font-family: sans-serif;
     border-radius: 90%;
-    background: conic-gradient(#9DB2BF 90deg, transparent 0deg);
+    background: conic-gradient(#9DB2BF var(--deg), transparent 0deg);
     
 }
 
