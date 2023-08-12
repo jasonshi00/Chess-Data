@@ -16,11 +16,10 @@ const blitzPie= document.getElementById("blitz-pie-chart");
 const userImg = document.getElementById("player-img");
 inputForm.onsubmit = (event) => {
     event.preventDefault();
-    userInfo.style.display = "flex";
     const username = userInput.value;
     userDiv.textContent = username;
     getData(username).then(data => {
-        console.log(data);
+        userInfo.style.display = "flex";
         dailyRating.textContent = data.chess_daily.last.rating;
         rapidRating.textContent = data.chess_rapid.last.rating;
         bulletRating.textContent = data.chess_bullet.last.rating;
@@ -35,14 +34,18 @@ inputForm.onsubmit = (event) => {
         rapidPie.textContent = rapidWinRate + "%";
         bulletPie.textContent = bulletWinRate + "%";
         blitzPie.textContent = blitzWinRate + "%";
-        console.log(dailyWinRate);
         dailyPie.style = `--deg: ${dailyWinRate * 3.6}deg`;
         rapidPie.style = `--deg: ${rapidWinRate * 3.6}deg`;
         bulletPie.style = `--deg: ${bulletWinRate * 3.6}deg`;
         blitzPie.style = `--deg: ${blitzWinRate * 3.6}deg`;
 
         userImg.src = data.avatar;
+    })
+    .catch(error => {
+        console.log()
+        alert("Invalid Username");
     });
+    
 }
 async function getData(username) {
     const response = await fetch(`https://api.chess.com/pub/player/${username}/stats`);
@@ -50,12 +53,9 @@ async function getData(username) {
     const playerResponse = await fetch(`https://api.chess.com/pub/player/${username}`); 
     const playerJson = await playerResponse.json();
     const {chess_daily, chess_rapid, chess_bullet, chess_blitz} = json;
-    try {
-        const {avatar = "https://images.chesscomfiles.com/uploads/images/noavatar_l.gif "} = playerJson;
-        return {chess_daily, chess_rapid, chess_bullet, chess_blitz, avatar};
-    } catch (error) {}
-
+    const {avatar = "https://images.chesscomfiles.com/uploads/images/noavatar_l.gif "} = playerJson;
     return {chess_daily, chess_rapid, chess_bullet, chess_blitz, avatar};
+    
 }
 
 function calculateWinRate(win, loss) {
